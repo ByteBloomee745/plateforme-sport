@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Match{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Nouveau Match</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Créer un nouveau match</h5>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.date, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.equipeA, null, {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.equipeA, {'attr': {'class': 'form-select'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.equipeB, null, {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.equipeB, {'attr': {'class': 'form-select'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.scoreA, null, {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.scoreA, {'attr': {'class': 'form-control', 'min': '0'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    {{ form_label(form.scoreB, null, {'label_attr': {'class': 'form-label'}}) }}
+                                    {{ form_widget(form.scoreB, {'attr': {'class': 'form-control', 'min': '0'}}) }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(form.competition, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.competition, {'attr': {'class': 'form-select'}}) }}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ path('app_match_index') }}" class="btn btn-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary">Créer le match</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

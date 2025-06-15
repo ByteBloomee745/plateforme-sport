@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard - Classements{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Dashboard des Classements</h1>
+    
+    <!-- Statistiques générales -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ total_classements }}</h4>
+                            <p class="mb-0">Total Classements</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-trophy fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ total_competitions }}</h4>
+                            <p class="mb-0">Compétitions</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-medal fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{ total_membres }}</h4>
+                            <p class="mb-0">Joueurs</p>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top 10 des meilleurs joueurs -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-star"></i> Top 10 des Meilleurs Joueurs</h5>
+                </div>
+                <div class="card-body">
+                    {% if top_joueurs %}
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Pos.</th>
+                                        <th>Joueur</th>
+                                        <th>Sport</th>
+                                        <th>Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for key, classement in top_joueurs %}
+                                        <tr>
+                                            <td>
+                                                {% if key == 0 %}
+                                                    <i class="fas fa-crown text-warning"></i>
+                                                {% elseif key == 1 %}
+                                                    <i class="fas fa-medal text-secondary"></i>
+                                                {% elseif key == 2 %}
+                                                    <i class="fas fa-medal text-warning"></i>
+                                                {% else %}
+                                                    {{ key + 1 }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ classement.membre.nomPrenom }}</td>
+                                            <td>
+                                                <span class="badge bg-secondary">{{ classement.competition.sport.nom }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-success">{{ classement.points }}</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            Aucun classement disponible.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Classements par sport -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-chart-bar"></i> Classements par Sport</h5>
+                </div>
+                <div class="card-body">
+                    {% if classements_par_sport %}
+                        <div class="accordion" id="accordionSports">
+                            {% for sport_nom, classements in classements_par_sport %}
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                        <button class="accordion-button {% if loop.index != 1 %}collapsed{% endif %}" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapse{{ loop.index }}" 
+                                                aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}" 
+                                                aria-controls="collapse{{ loop.index }}">
+                                            {{ sport_nom }} ({{ classements|length }} joueurs)
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{ loop.index }}" 
+                                         class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}" 
+                                         aria-labelledby="heading{{ loop.index }}" 
+                                         data-bs-parent="#accordionSports">
+                                        <div class="accordion-body">
+                                            {% if classements %}
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Pos.</th>
+                                                                <th>Joueur</th>
+                                                                <th>Points</th>
+                                                                <th>V/D/N</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for key, classement in classements %}
+                                                                <tr>
+                                                                    <td>{{ key + 1 }}</td>
+                                                                    <td>{{ classement.membre.nomPrenom }}</td>
+                                                                    <td>
+                                                                        <span class="badge bg-success">{{ classement.points }}</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        <small>{{ classement.victoires }}/{{ classement.defaites }}/{{ classement.nuls }}</small>
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <div class="alert alert-info">
+                                                    Aucun classement pour ce sport.
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            Aucun classement par sport disponible.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton retour -->
+    <div class="mt-4">
+        <a href="{{ path('app_classement_index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour aux classements
+        </a>
+    </div>
+</div>
+{% endblock %}
+

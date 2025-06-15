@@ -4,6 +4,12 @@ framework:
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true
+    
+    # Enable form handling
+    form: true
+    
+    # Enable CSRF protection
+    csrf_protection: true
 
     #esi: true
     #fragments: true

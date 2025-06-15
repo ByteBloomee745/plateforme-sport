@@ -31,6 +31,9 @@ class Competition
     #[ORM\OneToMany(targetEntity: Classement::class, mappedBy: 'competition')]
     private Collection $classements;
 
+    #[ORM\ManyToOne(inversedBy: 'competitions')]
+    private ?Sport $sport = null;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
@@ -103,6 +106,18 @@ class Competition
                 $classement->setCompetition(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSport(): ?Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?Sport $sport): static
+    {
+        $this->sport = $sport;
 
         return $this;
     }

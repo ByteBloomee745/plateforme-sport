@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Classement{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Modifier Classement</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Modifier le classement de {{ classement.membre.nomPrenom }}</h5>
+                    <small class="text-muted">Compétition: {{ classement.competition.nom }} ({{ classement.competition.sport.nom }})</small>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="points" class="form-label">Points</label>
+                                    <input type="number" name="points" id="points" class="form-control" 
+                                           value="{{ classement.points }}" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="victoires" class="form-label">Victoires</label>
+                                    <input type="number" name="victoires" id="victoires" class="form-control" 
+                                           value="{{ classement.victoires }}" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="defaites" class="form-label">Défaites</label>
+                                    <input type="number" name="defaites" id="defaites" class="form-control" 
+                                           value="{{ classement.defaites }}" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nuls" class="form-label">Nuls</label>
+                                    <input type="number" name="nuls" id="nuls" class="form-control" 
+                                           value="{{ classement.nuls }}" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> La modification manuelle des classements peut affecter la cohérence des données. 
+                            Il est recommandé de laisser le système mettre à jour automatiquement les classements via les résultats de matchs.
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ path('app_classement_index') }}" class="btn btn-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-calculate points based on victories, defeats, and draws
+    const victoiresInput = document.getElementById('victoires');
+    const defaitesInput = document.getElementById('defaites');
+    const nulsInput = document.getElementById('nuls');
+    const pointsInput = document.getElementById('points');
+    
+    function calculatePoints() {
+        const victoires = parseInt(victoiresInput.value) || 0;
+        const defaites = parseInt(defaitesInput.value) || 0;
+        const nuls = parseInt(nulsInput.value) || 0;
+        
+        // Default point system: 3 points for victory, 1 for draw, 0 for defeat
+        const points = (victoires * 3) + (nuls * 1) + (defaites * 0);
+        pointsInput.value = points;
+    }
+    
+    victoiresInput.addEventListener('input', calculatePoints);
+    defaitesInput.addEventListener('input', calculatePoints);
+    nulsInput.addEventListener('input', calculatePoints);
+});
+</script>
+{% endblock %}
+

@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Classement{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Nouveau Classement</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Créer un nouveau classement</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="membre_id" class="form-label">Joueur <span class="text-danger">*</span></label>
+                            <select name="membre_id" id="membre_id" class="form-select" required>
+                                <option value="">Sélectionnez un joueur</option>
+                                {% for membre in membres %}
+                                    <option value="{{ membre.id }}">{{ membre.nomPrenom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="competition_id" class="form-label">Compétition <span class="text-danger">*</span></label>
+                            <select name="competition_id" id="competition_id" class="form-select" required>
+                                <option value="">Sélectionnez une compétition</option>
+                                {% for competition in competitions %}
+                                    <option value="{{ competition.id }}">{{ competition.nom }} ({{ competition.sport.nom }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="points" class="form-label">Points</label>
+                                    <input type="number" name="points" id="points" class="form-control" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="victoires" class="form-label">Victoires</label>
+                                    <input type="number" name="victoires" id="victoires" class="form-control" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="defaites" class="form-label">Défaites</label>
+                                    <input type="number" name="defaites" id="defaites" class="form-control" value="0" min="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="nuls" class="form-label">Nuls</label>
+                                    <input type="number" name="nuls" id="nuls" class="form-control" value="0" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ path('app_classement_index') }}" class="btn btn-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary">Créer le classement</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-calculate points based on victories, defeats, and draws
+    const victoiresInput = document.getElementById('victoires');
+    const defaitesInput = document.getElementById('defaites');
+    const nulsInput = document.getElementById('nuls');
+    const pointsInput = document.getElementById('points');
+    
+    function calculatePoints() {
+        const victoires = parseInt(victoiresInput.value) || 0;
+        const defaites = parseInt(defaitesInput.value) || 0;
+        const nuls = parseInt(nulsInput.value) || 0;
+        
+        // Default point system: 3 points for victory, 1 for draw, 0 for defeat
+        const points = (victoires * 3) + (nuls * 1) + (defaites * 0);
+        pointsInput.value = points;
+    }
+    
+    victoiresInput.addEventListener('input', calculatePoints);
+    defaitesInput.addEventListener('input', calculatePoints);
+    nulsInput.addEventListener('input', calculatePoints);
+});
+</script>
+{% endblock %}
+
