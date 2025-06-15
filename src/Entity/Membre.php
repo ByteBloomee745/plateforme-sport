@@ -16,12 +16,11 @@ class Membre
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(name: 'nomPrenom', length: 255)]
     private ?string $nomPrenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(name: 'dateNaissance', type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateNaissance = null;
-
     /**
      * @var Collection<int, Classement>
      */

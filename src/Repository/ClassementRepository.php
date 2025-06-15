@@ -52,19 +52,21 @@ class ClassementRepository extends ServiceEntityRepository
      */
     public function getStatistiquesGlobales(): array
     {
-        $qb = $this->createQueryBuilder('c');
-        
         return [
-            'totalClassements' => $qb->select('COUNT(c.id)')
+            'totalClassements' => $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)')
                 ->getQuery()
                 ->getSingleScalarResult(),
-            'totalPoints' => $qb->select('SUM(c.points)')
+            'totalPoints' => $this->createQueryBuilder('c')
+                ->select('SUM(c.points)')
                 ->getQuery()
                 ->getSingleScalarResult(),
-            'totalVictoires' => $qb->select('SUM(c.victoires)')
+            'totalVictoires' => $this->createQueryBuilder('c')
+                ->select('SUM(c.victoires)')
                 ->getQuery()
                 ->getSingleScalarResult(),
-            'totalDefaites' => $qb->select('SUM(c.defaites)')
+            'totalDefaites' => $this->createQueryBuilder('c')
+                ->select('SUM(c.defaites)')
                 ->getQuery()
                 ->getSingleScalarResult()
         ];

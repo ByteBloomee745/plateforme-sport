@@ -18,7 +18,7 @@
                     <select name="sport" id="sport" class="form-select">
                         <option value="">Tous les sports</option>
                         {% for sport in sports %}
-                            <option value="{{ sport.id }}" {% if current_sport == sport.id|string %}selected{% endif %}>
+<option value="{{ sport.id }}" {% if current_sport == (sport.id ~ '') %}selected{% endif %}>
                                 {{ sport.nom }}
                             </option>
                         {% endfor %}
@@ -29,7 +29,7 @@
                     <select name="competition" id="competition" class="form-select">
                         <option value="">Toutes les compétitions</option>
                         {% for competition in competitions %}
-                            <option value="{{ competition.id }}" {% if current_competition == competition.id|string %}selected{% endif %}>
+<option value="{{ competition.id }}" {% if current_competition == (competition.id ~ '') %}selected{% endif %}>
                                 {{ competition.nom }}
                             </option>
                         {% endfor %}
@@ -40,7 +40,7 @@
                     <select name="membre" id="membre" class="form-select">
                         <option value="">Tous les joueurs</option>
                         {% for membre in membres %}
-                            <option value="{{ membre.id }}" {% if current_membre == membre.id|string %}selected{% endif %}>
+<option value="{{ membre.id }}" {% if current_membre == (membre.id ~ '') %}selected{% endif %}>
                                 {{ membre.nomPrenom }}
                             </option>
                         {% endfor %}

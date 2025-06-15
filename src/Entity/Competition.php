@@ -19,8 +19,8 @@ class Competition
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTime $dateDebut = null;
+    #[ORM\Column(name: 'dateDebut', type: Types::DATE_MUTABLE)]
+private ?\DateTime $dateDebut = null;
 
     #[ORM\Column(length: 255)]
     private ?string $format = null;

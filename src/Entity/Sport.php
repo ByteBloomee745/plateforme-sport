@@ -105,23 +105,50 @@ class Sport
 
         return $this;
     }
-    private ?int $pointsVictoire = null;
-private ?int $pointsNul = null;
-private ?int $pointsDefaite = null;
+    
+    #[ORM\Column(name: 'pointsVictoire', nullable: true)]
+private ?int $pointsVictoire = null;
 
-public function getPointsVictoire(): ?int
-{
-    return $this->pointsVictoire;
-}
+        #[ORM\Column(name: 'pointsNul', nullable: true)]
 
-public function getPointsNul(): ?int
-{
-    return $this->pointsNul;
-}
+    private ?int $pointsNul = null;
+   #[ORM\Column(name: 'pointsDefaite', nullable: true)]
 
-public function getPointsDefaite(): ?int
-{
-    return $this->pointsDefaite;
-}
+    private ?int $pointsDefaite = null;
 
+    public function getPointsVictoire(): ?int
+    {
+        return $this->pointsVictoire;
+    }
+    
+    public function setPointsVictoire(?int $pointsVictoire): static
+    {
+        $this->pointsVictoire = $pointsVictoire;
+        
+        return $this;
+    }
+
+    public function getPointsNul(): ?int
+    {
+        return $this->pointsNul;
+    }
+    
+    public function setPointsNul(?int $pointsNul): static
+    {
+        $this->pointsNul = $pointsNul;
+        
+        return $this;
+    }
+
+    public function getPointsDefaite(): ?int
+    {
+        return $this->pointsDefaite;
+    }
+    
+    public function setPointsDefaite(?int $pointsDefaite): static
+    {
+        $this->pointsDefaite = $pointsDefaite;
+        
+        return $this;
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\MatchEntity;
+use App\Entity\Match;
 use App\Form\MatchType;
 use App\Service\ClassementService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +22,7 @@ final class MatchController extends AbstractController
     #[Route("/match/new", name: "app_match_new")]
     public function new(Request $request): Response
     {
-        $match = new MatchEntity();
+        $match = new \App\Entity\MatchGame();
         $form = $this->createForm(MatchType::class, $match);
         $form->handleRequest($request);
 
@@ -44,27 +44,22 @@ final class MatchController extends AbstractController
                 $resultA = $resultB = 'nul';
             }
 
-            // Assuming you have a way to get members of EquipeA and EquipeB
-            // This part needs to be adapted based on your actual entity relationships
-            // For now, I'll leave a placeholder for fetching members
-            // $membresA = $this->entityManager->getRepository(Membership::class)->findBy(['equipe' => $match->getEquipeA()]);
-            // $membresB = $this->entityManager->getRepository(Membership::class)->findBy(['equipe' => $match->getEquipeB()]);
-
-            // foreach ($membresA as $mA) {
-            //     $this->classementService->mettreAJourClassement(
-            //         $mA->getMembre(),
-            //         $match->getCompetition(),
-            //         $resultA
-            //     );
-            // }
-
-            // foreach ($membresB as $mB) {
-            //     $this->classementService->mettreAJourClassement(
-            //         $mB->getMembre(),
-            //         $match->getCompetition(),
-            //         $resultB
-            //     );
-            // }
+            // Mettre à jour les classements pour les équipes
+            // Nous devons implémenter une logique pour récupérer les membres des équipes
+            // Pour l'instant, nous allons mettre à jour directement les équipes
+            
+            // Créer une méthode dans ClassementService pour mettre à jour les équipes
+            $this->classementService->mettreAJourClassementEquipe(
+                $match->getEquipeA(),
+                $match->getCompetition(),
+                $resultA
+            );
+            
+            $this->classementService->mettreAJourClassementEquipe(
+                $match->getEquipeB(),
+                $match->getCompetition(),
+                $resultB
+            );
 
             return $this->redirectToRoute('app_match_index'); // Assuming an index route for matches
         }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MatchRepository::class)]
 #[ORM\Table(name: 'match_table')]
-class MatchEntity
+class MatchGame
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
