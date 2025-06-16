@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\ClassementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ClassementRepository::class)]
+#[ORM\Entity(repositoryClass: \App\Repository\ClassementRepository::class)]
 class Classement
 {
     #[ORM\Id]
