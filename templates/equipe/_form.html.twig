@@ -1,0 +1,42 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{ button_label|default('Créer une équipe') }}</h5>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        <div class="mb-3">
+                            {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form_label(form.sport, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.sport, {'attr': {'class': 'form-select'}}) }}
+                        </div>
+                        <div class="mb-3 d-flex align-items-end">
+                            <div class="flex-grow-1">
+                                {{ form_label(form.coach, null, {'label_attr': {'class': 'form-label'}}) }}
+                                {{ form_widget(form.coach, {'attr': {'class': 'form-select'}}) }}
+                            </div>
+                            <div class="ms-2">
+                                <a href="{{ path('app_membre_new') }}" class="btn btn-outline-success" target="_blank">
+                                    Ajouter un coach
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ path('app_equipe_index') }}" class="btn btn-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

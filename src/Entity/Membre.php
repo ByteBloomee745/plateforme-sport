@@ -27,9 +27,23 @@ class Membre
     #[ORM\OneToMany(targetEntity: Classement::class, mappedBy: 'membre')]
     private Collection $classements;
 
+    /**
+     * @var Collection<int, Entrainement>
+     */
+    #[ORM\OneToMany(targetEntity: Entrainement::class, mappedBy: 'coach')]
+    private Collection $entrainements;
+
+    /**
+     * @var Collection<int, Membership>
+     */
+    #[ORM\OneToMany(targetEntity: Membership::class, mappedBy: 'membre', orphanRemoval: true)]
+    private Collection $memberships;
+
     public function __construct()
     {
         $this->classements = new ArrayCollection();
+        $this->entrainements = new ArrayCollection();
+        $this->memberships = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,6 +99,66 @@ class Membre
             // set the owning side to null (unless already changed)
             if ($classement->getMembre() === $this) {
                 $classement->setMembre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Entrainement>
+     */
+    public function getEntrainements(): Collection
+    {
+        return $this->entrainements;
+    }
+
+    public function addEntrainement(Entrainement $entrainement): static
+    {
+        if (!$this->entrainements->contains($entrainement)) {
+            $this->entrainements->add($entrainement);
+            $entrainement->setCoach($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEntrainement(Entrainement $entrainement): static
+    {
+        if ($this->entrainements->removeElement($entrainement)) {
+            // set the owning side to null (unless already changed)
+            if ($entrainement->getCoach() === $this) {
+                $entrainement->setCoach(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Membership>
+     */
+    public function getMemberships(): Collection
+    {
+        return $this->memberships;
+    }
+
+    public function addMembership(Membership $membership): static
+    {
+        if (!$this->memberships->contains($membership)) {
+            $this->memberships->add($membership);
+            $membership->setMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembership(Membership $membership): static
+    {
+        if ($this->memberships->removeElement($membership)) {
+            // set the owning side to null (unless already changed)
+            if ($membership->getMembre() === $this) {
+                $membership->setMembre(null);
             }
         }
 

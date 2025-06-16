@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Match;
+use App\Entity\MatchGame;
 use App\Form\MatchType;
 use App\Service\ClassementService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,7 +22,7 @@ final class MatchController extends AbstractController
     #[Route("/match/new", name: "app_match_new")]
     public function new(Request $request): Response
     {
-        $match = new \App\Entity\MatchGame();
+        $match = new MatchGame();
         $form = $this->createForm(MatchType::class, $match);
         $form->handleRequest($request);
 

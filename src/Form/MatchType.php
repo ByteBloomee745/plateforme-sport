@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Match;
+use App\Entity\MatchGame;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -48,7 +48,7 @@ class MatchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => \App\Entity\MatchGame::class,
+            'data_class' => MatchGame::class,
         ]);
     }
 }

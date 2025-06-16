@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Entrainement{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h1 class="mb-4">Créer un nouvel entraînement</h1>
+                {{ include('entrainement/_form.html.twig', {'button_label': 'Créer'}) }}
+                <div class="mt-3">
+                    <a href="{{ path('app_entrainement_index') }}" class="btn btn-outline-secondary">Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
